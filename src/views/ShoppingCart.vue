@@ -1,10 +1,4 @@
-<!--
- * @Description: 我的购物车页面组件
- * @Author: hai-27
- * @Date: 2020-02-20 01:55:47
- * @LastEditors: hai-27
- * @LastEditTime: 2020-02-27 13:36:42
- -->
+
 
 <template>
   <div class="shoppingCart">
@@ -125,7 +119,11 @@ export default {
   data() {
     return {};
   },
+  //computed与methods区别：computed有缓存机制，当依赖的data属性变化了才会重新渲染页面
+  //methods 不管数据是否变化，只要触发就会执行。
   methods: {
+    //返回的是一个对象，用...扩展符，才可以放进一个对象里。和其他组件内定义的method 在同一个methods对象。
+    //...可以把多个对象合并成一个对象，再把合并好的最终对象传到computed属性里。
     ...mapActions(["updateShoppingCart", "deleteShoppingCart", "checkAll"]),
     // 修改商品数量的时候调用该函数
     handleChange(currentValue, key, productID) {
@@ -156,7 +154,10 @@ export default {
               this.notifyError(res.data.msg);
           }
         })
-        .catch(err => {
+        //      getJSON方法返回一个 Promise 对象，如果该对象状态变为resolved，则会调用then方法指定的回调函数；
+        //      如果异步操作抛出错误，状态就会变为rejected，就会调用catch方法指定的回调函数，处理这个错误。
+        //      另外，then方法指定的回调函数，如果运行中抛出错误，也会被catch方法捕获。
+              .catch(err => {
           return Promise.reject(err);
         });
     },
